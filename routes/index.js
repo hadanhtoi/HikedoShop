@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { page: 'Hikedo Shop - Shoes Online Shop' });
+router.get('/', function (req, res, next) {
+  res.render('index', { page: 'Sunny Shop - Shoes Online Shop' });
 });
 
 module.exports = router;
