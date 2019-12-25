@@ -1,0 +1,48 @@
+<div class="container-fluid sign">
+  <div class="row mt-5">
+    <div class="col-md-6 form-1">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-user-plus"></i> Sign Up
+        </h1>
+        <%# include partials/messages %>
+        <form action="/users/signUp" method="GET">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name"
+              value="<%= typeof name != 'undefined' ? name : '' %>" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+              value="<%= typeof email != 'undefined' ? email : '' %>" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Create Password"
+              value="<%= typeof password != 'undefined' ? password : '' %>" />
+          </div>
+          <div class="form-group">
+            <label for="password2">Confirm Password</label>
+            <input type="password" id="password2" name="password2" class="form-control" placeholder="Confirm Password"
+              value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter Phone"
+              value="<%= typeof phone != 'undefined' ? phone : '' %>" />
+          </div>
+          <div class="form-group">
+            <label for="birthday">Birthday</label>
+            <input type="text" id="birthday" name="birthday" class="form-control" placeholder="dd/mm/yyyy"
+              value="<%= typeof birthday != 'undefined' ? birthday : '' %>" />
+          </div>
+          <div class="form-footer flex-column">
+            <button id="sign-up-submit-btn" class="reg-sig-btn" type="submit">Sign Up</button>
+            <a class="pt-2" id="sign-in-link" href="/users/signIn">Already have an account? Sign In</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

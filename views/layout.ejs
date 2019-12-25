@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%# include partials/head %>
+  <%- include('./partials/head.ejs'); %>
+</head>
+
+<body>
+  <div class="main">
+    <% include partials/headerTitle %>
+    <% include partials/headerNav %>
+    <% include partials/navBarMenu  %>
+
+    <!-- <div class="home-page-panel"> -->
+    <%- body %>
+    <!-- </div> -->
+  </div>
+
+  <% include partials/scriptFiles %>
+</body>
+
+</html>

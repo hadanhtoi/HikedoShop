@@ -6,3 +6,8 @@
 $npm install
 4.Install nodemon (search)
 $npm install -g nodemon
+
+#EJS
+<%# include partials/head %>
+or
+<%- include('./partials/head.ejs'); %>
