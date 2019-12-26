@@ -54,12 +54,12 @@ app.use(function (err, req, res, next) {
 //connect DB
 client.connect(err => {
   assert.equal(null, err);
-  console.log("Connected successfully to server");
+  console.log("Connected successfully to mongoDB");
   // const db = client.db(dbName);
   // const cursor = db.collection('Products').find({ brand_id: 10 });
   // db.collection('Products').count({ brand_id: 1 }, (err, num) => {
   //   console.log(num);
   // });
-  });
+});
 
 module.exports = app;

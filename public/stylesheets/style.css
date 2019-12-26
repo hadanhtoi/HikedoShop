@@ -10,6 +10,7 @@ body{
   /* font-size: 14px; */
   line-height: 25px;
   color: #333;
+  font-size: 16px !important;
   background-color: #fff;
 }
 
@@ -310,6 +311,122 @@ ul.header-right li:not(:first-child) {
   margin: 10px auto;
 }
 
+/* footer start */
+.footer {
+  padding: 26px 0 25px;
+  background: #404042;
+  overflow: hidden;
+  margin-top: 50px;
+  color: white;
+}
+/* footer end */
 
+.menu a{
+  font-size: 18px !important;  
+}
 
+.recruitment{
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  background-image: url("https://st2.depositphotos.com/2635513/7336/i/950/depositphotos_73367023-stock-photo-sorry-background.jpg");
+  background-size: cover;
+  height: calc(1.5*100vh);
+  text-align: center;
+  width: 100%;
+  opacity: 0.8;
+  font-weight: bold;
+  font-size: 3rem !important;
+  color: black;
+}
+
+.recruitment span{
+  width: 100%;
+  margin: 1rem auto;
+}
+
+.about-us,.news,.subcribe{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.about-us a{
+  margin: 8px 0;
+  color: white;
+  text-decoration: none;
+  display: block;
+  text-align: start;
+}
+
+.detail_blog{
+  width: 100%;
+  background-color: white;
+  padding: 10px;
+}
+
+.news a, .news h2{
+  margin: 8px 0;
+  color: white;
+  text-decoration: none;
+  display: block;
+  text-align: start;
+}
+
+.subcribe>*{
+  margin: 8px 0;
+  color: white;
+  text-decoration: none;
+  display: block;
+  text-align: start;
+}
+
+.footer .title,.about-us .title,.news .title {
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.footer .form-subcribe {
+  position: relative;
+  margin: 15px 0 25px;
+}
+
+.footer .form-subcribe .input-subcribe {
+  height: 49px;
+  width: 95%;
+  color: #959595;
+  padding-left: 19px;
+  border-radius: 4px 0 0 4px;
+}
+
+.subcribe p{
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.subcribe a{
+  margin: 8px 0;
+  color: white;
+  text-decoration: none;
+  display: block;
+  text-align: start;
+}
+
+.subcribe a i{
+  width: 25px;
+  height: auto;
+}
+
+.footer .form-subcribe .submit-subcribe {
+  background: #cc121f;
+  border-radius: 0 4px 4px 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 54px;
+  height: 50px;
+  cursor: pointer;
+}
 
