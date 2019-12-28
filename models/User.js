@@ -7,7 +7,7 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
     require: false,
-    default: null
+    default: ""
   },
   password: {
     type: String,
@@ -17,14 +17,20 @@ const UserSchema = mongoose.Schema({
     type: String,
     require: true
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
   birthday: {
     type: String,
-    require: true
+    require: true,
+    default: ""
   },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  },
+  image:{
+    type:String,
+    require:false,
+    default:'/images/man-user.png'
+  }  
 });
 
 const User = mongoose.model("User", UserSchema);

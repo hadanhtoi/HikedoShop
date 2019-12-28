@@ -3,13 +3,15 @@
     <div class="col-md-6 form-1">
       <div class="card card-body">
         <h1 class="text-center mb-3">
-          <i class="fas fa-user-plus"></i> Sign Up
+          <i class="fas fa-user-plus"></i>
+          Sign Up
         </h1>
-        <%# include partials/messages %>
-        <form action="/users/signUp" method="GET">
+        <% include partials/messages %>
+
+        <form action="/users/signUp" method="post">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="name" id="name" name="name" class="form-control" placeholder="Enter Name"
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name"
               value="<%= typeof name != 'undefined' ? name : '' %>" />
           </div>
           <div class="form-group">
@@ -34,7 +36,7 @@
           </div>
           <div class="form-group">
             <label for="birthday">Birthday</label>
-            <input type="text" id="birthday" name="birthday" class="form-control" placeholder="dd/mm/yyyy"
+            <input type="text" id="birthday" name="birthday" class="form-control" placeholder="mm/dd/yyyy"
               value="<%= typeof birthday != 'undefined' ? birthday : '' %>" />
           </div>
           <div class="form-footer flex-column">

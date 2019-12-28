@@ -6,11 +6,18 @@ var logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const MongoDBClient = require("mongodb").MongoClient;
 const assert = require('assert');
+const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+// Passport config 
+require('./config/passport')(passport);
 
 // add express ejs layout
 app.use(expressLayouts);
@@ -19,16 +26,38 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // connect to mongodb
-// const dbName = require('./config/key').DB_NAME;
-const url = require('./config/key').MONGO_URL;
-const client = new MongoDBClient(url, {
+const db = require('./config/key').MONGO_URL;
+mongoose.connect(db,{
   useUnifiedTopology: true,
   useNewUrlParser: true,
+}).then(()=>{
+  console.log("Database connected...");
+}).catch(err => {
+  console.log("Database connection error: "+err);
 });
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
+// Express session
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { maxAge: 8*60*60*1000 },
+}));
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+// connect fash
+app.use(flash());
+// Global vars
+app.use((req,res,next)=>{
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -49,17 +78,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-//connect DB
-client.connect(err => {
-  assert.equal(null, err);
-  console.log("Connected successfully to mongoDB");
-  // const db = client.db(dbName);
-  // const cursor = db.collection('Products').find({ brand_id: 10 });
-  // db.collection('Products').count({ brand_id: 1 }, (err, num) => {
-  //   console.log(num);
-  // });
 });
 
 module.exports = app;
