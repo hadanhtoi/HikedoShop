@@ -1,0 +1,23 @@
+<% if(typeof message.errorsArr != 'undefined'){ %>
+<% message.errorsArr.forEach(err =>{ %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= err.msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<% }); %>
+<% }else{ %>
+
+<% } %>
+
+<% if(typeof message.warning != 'undefined'){ %>
+<% for(err of message.warning){ %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <%= err %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<% } %>
+<% }%>

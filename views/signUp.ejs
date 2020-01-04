@@ -39,6 +39,11 @@
             <input type="text" id="birthday" name="birthday" class="form-control" placeholder="mm/dd/yyyy"
               value="<%= typeof birthday != 'undefined' ? birthday : '' %>" />
           </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" class="form-control" placeholder="Enter Address"
+              value="<%= typeof address != 'undefined' ? address : '' %>" />
+          </div>
           <div class="form-footer flex-column">
             <button id="sign-up-submit-btn" class="reg-sig-btn" type="submit">Sign Up</button>
             <a class="pt-2" id="sign-in-link" href="/users/signIn">Already have an account? Sign In</a>

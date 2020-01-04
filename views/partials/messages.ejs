@@ -9,29 +9,35 @@
 <% }); %>
 <% } %>
 
-<% if(success_msg != ''){  %>
+<% if((typeof success_msg != 'undefined')&&(success_msg != '')){  %>
+<%for(suc of success_msg){%>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-  <%= success_msg %>
+  <%= suc %>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<% } %>
+<%}%>
+<% }%>
 
-<% if(error_msg != ''){  %>
+<%if((typeof error_msg != 'undefined')&&(error_msg != '')){  %>
+<%for(err of error_msg){%>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <%= error_msg %>
+  <%= err%>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<% } %>
+<%}%>
+<%}%>
 
-<% if(error != ''){  %>
+<% if((typeof error != 'undefined')&&(error != '')){  %>
+<%  error.forEach(er =>{%>
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <%= error %>
+  <%= er %>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+<%  });%>
 <% } %>

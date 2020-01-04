@@ -1,4 +1,8 @@
-<h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome <%= user.name %></p>
-<a href="/users/signOut" class="reg-sig-btn">Logout</a>
-<a href="/users/profile" class="reg-sig-btn">Profile</a>
+<div class="container">
+  <div class="row d-flex justify-content-center flex-column">
+    <h1 class="mt-4">Welcome</h1>
+    <p class="lead mb-3">Chào mừng <%= user.name %>! Bạn đã đăng nhập thành công</p>
+    <a href="/users/signOut" style="width: 30%; margin-bottom: 5px;" class="reg-sig-btn">Logout</a>
+    <a href="/users/profile" style="width: 30%;" class="reg-sig-btn">Profile</a>
+  </div>
+</div>

@@ -7,14 +7,11 @@
 </head>
 
 <body>
-  <div class="main">
+  <div class="main container-fluid">
     <% include partials/headerTitle %>
     <% include partials/headerNav %>
     <% include partials/navBarMenu  %>
-
-    <!-- <div class="home-page-panel"> -->
     <%- body %>
-    <!-- </div> -->
     <%- include('./partials/footer.ejs'); %>
   </div>
   <% include partials/scriptFiles %>
