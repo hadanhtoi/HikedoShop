@@ -55,7 +55,11 @@ app.use(flash());
 app.use((req,res,next)=>{
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
+  res.locals.warning_msg = req.flash('warning_msg');
   res.locals.error = req.flash('error');
+  res.locals.message = req.flash();
+  
+  // res.locals.error_arr = req.flash('error_arr');
   next();
 });
 app.use(cookieParser());
@@ -73,6 +77,7 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
+  res.locals.error_arr = req.flash('error_arr');
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
