@@ -60,6 +60,10 @@ color: #cc2121;
   margin-block-end: 0px;
 }
 
+.reset-padding{
+  padding-left: 0;
+}
+
 @media screen and (max-width: 767px){
   
   .header-title-right{
@@ -717,14 +721,36 @@ span.sale-tag{
   padding: 13px 20px;
   text-decoration: none;
   position: relative;
-  border: 1px solid #e1e1e1;
+  /* border: 1px solid #e1e1e1; */
   letter-spacing: 0.4em;
   text-align: center;
-  text-indent: 2px;
-  background-color: #4CAF50;
+  /* text-indent: 2px; */
+  /* background-color: #4CAF50; */
+  background-color: white;
   border-radius: 10px;
 }
 
+.brand-name{
+  min-height: 45px;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.unset-radius{
+  border-radius: unset !important;
+}
+
+.border-left{
+  border: 1px solid white;
+}
+
+.product-card div:nth-child(3):hover,.product-card div:nth-child(3):focus,.product-card div:nth-child(3) i:hover,.product-card div:nth-child(3) i:focus{
+  color: red !important;
+}
 
 
 

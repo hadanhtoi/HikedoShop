@@ -12,17 +12,17 @@ const User = require('../models/User');
 
 /* GET users listing. */
 router.get('/signIn', forwardAuthenticated, (req, res, next) => {
-  res.render('signIn', { page: "Sign In Page" });
+  res.render('signIn', { pageTitle: "Sign In Page" });
 });
 
 router.get('/signUp', (req, res, next) => {
-  res.render('signUp', { page: "Sign Up Page" });
+  res.render('signUp', { pageTitle: "Sign Up Page" });
 });
 // Profile
 router.get('/profile', ensureAuthenticated, (req, res) => {
   const createdAt = moment(req.user.createdAt).format('MM/DD/YYYY');
   res.render('userProfile', {
-    page: "User Profile",
+    pageTitle: "User Profile",
     user: req.user,
     createdAt: createdAt,
   });
@@ -46,7 +46,7 @@ router.post('/profile/editUserProfile', ensureAuthenticated, (req, res, next) =>
   // if(errors.length > 0){
   //   errors.push({msg:"Nhấn Edit nếu muốn tiếp tục Edit,"});
   //   res.render('userProfile',{
-  //     page:"User Profile",
+  //     pageTitle:"User Profile",
   //     user:req.user,
   //     errors,
   //     createdAt:moment(req.user.createdAt).format('MM/DD/YYYY')
@@ -66,7 +66,7 @@ router.post('/profile/editUserProfile', ensureAuthenticated, (req, res, next) =>
       if (result != true) {
         // errors.push({ msg: "Confirm Password không đúng!" });
         // res.render("userProfile", {
-        //   page: "User Profile",
+        //   pageTitle: "User Profile",
         //   errors,
         //   user: req.user,
         //   createdAt: moment(req.user.createdAt).format('MM/DD/YYYY')
@@ -80,7 +80,7 @@ router.post('/profile/editUserProfile', ensureAuthenticated, (req, res, next) =>
             errors.push({ msg: "Không tìm thấy tài khoản đã đăng nhập!" });
             req.logout();
             res.render("signIn", {
-              page: "User Profile",
+              pageTitle: "User Profile",
               errors,
             });
           } else {
@@ -120,7 +120,7 @@ router.post('/profile/changePassword', ensureAuthenticated, (req, res, next) => 
   }
   if (errors2.length > 0) {
     // res.render('userProfile', {
-    //   page: "User Profile",
+    //   pageTitle: "User Profile",
     //   errors2,
     //   user: req.user,
     //   createdAt: moment(req.user.createdAt).format('MM/DD/YYYY')
@@ -200,7 +200,7 @@ router.post('/signUp', forwardAuthenticated, function (req, res, next) {
 
   if (errors.length > 0) {
     res.render('signUp', {
-      page: "Sign Up Page",
+      pageTitle: "Sign Up Page",
       errors,
       name,
       email,
@@ -217,7 +217,7 @@ router.post('/signUp', forwardAuthenticated, function (req, res, next) {
         //user exists
         errors.push({ msg: "Số điện thoại đã được sử dụng. Hãy lấy số điện thoại khác" });
         res.render("signUp", {
-          page: "Sign Up Page",
+          pageTitle: "Sign Up Page",
           errors,
           name,
           email,

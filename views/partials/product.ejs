@@ -1,0 +1,35 @@
+<div class="container pt-3">
+  <div class="row flex-column align-items-center">
+    <% for (let i = 0; i < Results.length; i++) { %>
+    <div class="row col-12 col-md-12 brand-name"><%= Results[i].brand_name %></div>
+    <div class="row col-12 col-md-12 products justify-content-space">
+      <% for(let product of Results[i].products){%>
+      <div class="c-product-card">
+        <div class="product-card">
+          <a href="#">
+            <div class="product-card-media lux-bg">
+              <img id="product-img" src="<%= product.images[0]%>" alt="">
+            </div>
+          </a>
+          <div class="product-card-details">
+            <h2 id="productName"><%= product.product_name%></h2>
+            <div class="product-price flex-wrap">
+              <%#<span class="old-price">2,220,000đ</span>%>
+              <span class="current-price"><%=product.list_price%><%=product.money_unit%></span>
+            </div>
+          </div>
+          <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
+            <div class="col d-flex justify-content-center "><a href=""><i
+                  class="fas fa-heart fa-2x text-light"></i></a></i></div>
+            <div class="col d-flex justify-content-center "><a href=""><i
+                  class="fas fa-shopping-cart fa-2x text-light"></i></a></div>
+
+          </div>
+        </div>
+      </div>
+      <% }%>
+    </div>
+
+    <% } %>
+  </div>
+</div>

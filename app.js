@@ -35,7 +35,8 @@ mongoose.connect(db,{
 }).catch(err => {
   console.log("Database connection error: "+err);
 });
-
+//Ép Mongoose sử dụng thư viện promise toàn cục
+// mongoose.Promise = global.Promise;
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
