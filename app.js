@@ -30,6 +30,7 @@ const db = require('./config/key').MONGO_URL;
 mongoose.connect(db,{
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useCreateIndex: true,
 }).then(()=>{
   console.log("Database connected...");
 }).catch(err => {
