@@ -1,94 +1,98 @@
 <div class="container mt-2">
   <div class="row flex-column align-items-center">
-    <div class="row col-12 col-md-12 brand-name">TÌM KIẾM : <%=query_string%></div>
-    <div class="row col-12 col-md-12 justify-content-center mt-2 mb-2" style="font-weight: bold;font-size: 22px;">
-      <div>
-        <% if(current == pages){%>
-        <%=count%> of <%=count%>
-        <% }else{%>
-        <%=current *perPage%> of <%=count%>
-        <% }%>
-      </div>
-    </div>
-    <div class="row col-12 col-md-12 products justify-content-space">
-      <% for(let product of products){%>
-      <div class="c-product-card">
-        <div class="product-card">
-          <a href="#">
-            <div class="product-card-media lux-bg">
-              <img id="product-img" src="<%= product.images[0]%>" alt="">
-            </div>
-          </a>
-          <div class="product-card-details">
-            <h2 id="productName"><%= product.product_name%></h2>
-            <div class="product-price flex-wrap">
-              <%#<span class="old-price">2,220,000đ</span>%>
-              <span class="current-price"><%=product.list_price%><%=product.money_unit%></span>
-            </div>
-          </div>
-          <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
-            <div class="col d-flex justify-content-center "><a href=""><i
-                  class="fas fa-heart fa-2x text-light"></i></a></i></div>
-            <div class="col d-flex justify-content-center "><a href=""><i
-                  class="fas fa-shopping-cart fa-2x text-light"></i></a></div>
-          </div>
+    <div class="row col-12 col-md-12 brand-name mb-2">TÌM KIẾM : <%=query_string%></div>
+    <% include partials/messages %>
+    <%if(!error_msg || typeof error_msg == undefined || error_msg == null || error_msg == ""){%>
+      <div class="row col-12 col-md-12 justify-content-center mt-2 mb-2" style="font-weight: bold;font-size: 22px;">
+        <div>
+          <% if(current == pages){%>
+          <%=count%> of <%=count%>
+          <% }else{%>
+          <%=current *perPage%> of <%=count%>
+          <% }%>
         </div>
       </div>
-      <% }%>
-    </div>
-    <div class="row">
-      <nav aria-label="Page navigation">
-        <% if(Number(pages) > 0){%>
-        <ul class="pagination justify-content-center text-center flex-column></ul>
-        <% if(current == 1){%>
-        <li class=" page-item disabled">
-          <a class="page-link" href="1?search_string=<%=query_string%>" tabindex="-1">First</a>
-          </li>
-          <% }else{%>
-          <li class="page-item">
+      <div class="row col-12 col-md-12 products justify-content-space">
+        <% for(let product of products){%>
+        <div class="c-product-card">
+          <div class="product-card">
+            <a href="#">
+              <div class="product-card-media lux-bg">
+                <img id="product-img" src="<%= product.images[0]%>" alt="">
+              </div>
+            </a>
+            <div class="product-card-details">
+              <h2 id="productName"><%= product.product_name%></h2>
+              <div class="product-price flex-wrap">
+                <%#<span class="old-price">2,220,000đ</span>%>
+                <span class="current-price"><%=product.list_price%><%=product.money_unit%></span>
+              </div>
+            </div>
+            <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
+              <div class="col d-flex justify-content-center "><a href=""><i
+                    class="fas fa-heart fa-2x text-light"></i></a></i></div>
+              <div class="col d-flex justify-content-center "><a href=""><i
+                    class="fas fa-shopping-cart fa-2x text-light"></i></a></div>
+            </div>
+          </div>
+        </div>
+        <% }%>
+      </div>
+      <div class="row flex-row">
+        <nav aria-label="Page navigation">
+          <% if(Number(pages) > 0){%>
+          <ul class="pagination justify-content-center text-center flex-row">
+          <% if(current == 1){%>
+          <li class=" page-item disabled">
             <a class="page-link" href="1?search_string=<%=query_string%>" tabindex="-1">First</a>
-          </li>
-          <% }%>
-          <% var i =((Number(current)>5)?(Number(current)-4):1)%>
-          <%if(i <= 1){%>
-          <li class="page-item disabled">
-            <a class="page-link" href="<%=Number(current)-4%>?search_string=<%=query_string%>">...</a>
-          </li>
-          <% }else{%>
-          <li class="page-item">
-            <a class="page-link" href="<%=Number(current)-4%>?search_string=<%=query_string%>">...</a>
-          </li>
-          <% }%>
-          <% for(; i <= ( Number(current) + 4 )&&( i <= pages);i++){%>
-          <% if(i == current){%>
-          <li class="page-item active">
-            <a class="page-link" href="<%=Number(current)%>?search_string=<%=query_string%>"><%=Number(current)%></a>
-          </li>
-          <% }else{%>
-          <li class="page-item">
-            <a class="page-link" href="<%=Number(i)%>?search_string=<%=query_string%>"><%=Number(i)%></a></li>
-          <%}%>
-          <% }%>
-          <% if((Number(current)+4) >= pages){%>
-          <li class="page-item disabled">
-            <a class="page-link" href="<%=Number(current)+4%>?search_string=<%=query_string%>">...</a>
-          </li>
-          <% }else{%>
-          <li class="page-item">
-            <a class="page-link" href="<%=Number(current)+4%>?search_string=<%=query_string%>">...</a>
-          </li>
-          <%}%>
-        <% if(Number(current) == pages){%>
-          <li class="page-item disabled">
-            <a class="page-link" href="<%=Number(pages)%>?search_string=<%=query_string%>">Last</a>
-          </li>
-          <% }else{%>
-          <li class="page-item">
-            <a class="page-link" href="<%=Number(pages)%>?search_string=<%=query_string%>">Last</a>
-          </li>
-          <% }%>
-          <% }%>
-      </nav>
-    </div>
+            </li>
+            <% }else{%>
+            <li class="page-item">
+              <a class="page-link" href="1?search_string=<%=query_string%>" tabindex="-1">First</a>
+            </li>
+            <% }%>
+            <% var i =((Number(current)>5)?(Number(current)-4):1)%>
+            <%if(i <= 1){%>
+            <li class="page-item disabled">
+              <a class="page-link" href="<%=Number(current)-4%>?search_string=<%=query_string%>">...</a>
+            </li>
+            <% }else{%>
+            <li class="page-item">
+              <a class="page-link" href="<%=Number(current)-4%>?search_string=<%=query_string%>">...</a>
+            </li>
+            <% }%>
+            <% for(; i <= ( Number(current) + 4 )&&( i <= pages);i++){%>
+            <% if(i == current){%>
+            <li class="page-item active">
+              <a class="page-link" href="<%=Number(current)%>?search_string=<%=query_string%>"><%=Number(current)%></a>
+            </li>
+            <% }else{%>
+            <li class="page-item">
+              <a class="page-link" href="<%=Number(i)%>?search_string=<%=query_string%>"><%=Number(i)%></a></li>
+            <%}%>
+            <% }%>
+            <% if((Number(current)+4) >= pages){%>
+            <li class="page-item disabled">
+              <a class="page-link" href="<%=Number(current)+4%>?search_string=<%=query_string%>">...</a>
+            </li>
+            <% }else{%>
+            <li class="page-item">
+              <a class="page-link" href="<%=Number(current)+4%>?search_string=<%=query_string%>">...</a>
+            </li>
+            <%}%>
+          <% if(Number(current) == pages){%>
+            <li class="page-item disabled">
+              <a class="page-link" href="<%=Number(pages)%>?search_string=<%=query_string%>">Last</a>
+            </li>
+            <% }else{%>
+            <li class="page-item">
+              <a class="page-link" href="<%=Number(pages)%>?search_string=<%=query_string%>">Last</a>
+            </li>
+            <% }%>
+          </ul>
+            <% }%>
+        </nav>
+      </div>
+    <%}%>
   </div>
 </div>

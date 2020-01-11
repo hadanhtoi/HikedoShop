@@ -6,6 +6,7 @@ var lodash = require('lodash');
 const Product = require('../models/Product');
 const Product2 = require('../models/Product2');
 const Brand = require('../models/Brand');
+const Category = require('../models/Category');
 const selected_category_id = require('../config/constant').SELECTED_CATEGORY_ID;
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 /* GET home page. */
@@ -19,12 +20,13 @@ router.get('/', async (req, res, next) => {
     const products = await Product.find({ brand_id: brand.id, category_id: selected_category_id }).limit(perPage);
     Results.push({ brand_name: brand.brand_name, products: products });
   }
+  //create product2 collection 
   // const p1 = await Product.find({});
   // let arr = [];
   // for(p of p1){
   //   Product2.create({product_id:p.id,product_name:nonAccentVietnamese(p.product_name)});
   // }
-  
+
   res.render('index', {
     pageTitle: "Sunny Shop",
     Results: Results
@@ -36,51 +38,213 @@ router.get('/search/:page', async (req, res) => {
   const page = parseInt(req.params.page) || 1;
   const query1 = req.query.search_string;
   let query = query1.toString().toLowerCase();
-   query = nonAccentVietnamese(query1.trim())
+  query = nonAccentVietnamese(query1.trim())
   // console.log("111",req.url.toString());
   // console.log("222",req.baseUrl.toString());
   // console.log("3333",req.originalUrl.toString());
   // console.log("444",req.query);
   // console.log("55",req.path);
   // console.log("66".req.body);
-//   111 /search/1?search_string=giay
-// 222 
-// 3333 /search/1?search_string=giay
-// 444 { search_string: 'giay' }
-// 55 /search/1
+  //   111 /search/1?search_string=giay
+  // 222 
+  // 3333 /search/1?search_string=giay
+  // 444 { search_string: 'giay' }
+  // 55 /search/1
   let products = await Product2.find({
     $text: { $search: query }
   }, { score: { $meta: "textScore" } }
-  );//score: { $meta: "textScore" }
-  // products =  await sortArr(products,["list_price"],['asc']);
-  // let _products = products.slice(perPage*page - perPage ,perPage*page ) //skip(perPage*page - perPage).limit(perPage);
+  );
   let result = await getSearchProducts(products);
-  let count =  await Product2.find({
+  let count = await Product2.find({
     $text: { $search: query }
   }, { score: { $meta: "textScore" } }
   )
-  let _products = result.slice(perPage*page - perPage ,perPage*page )
-    
-  if(_products.length < 1){
-    res.render('404',{
-      pageTitle:"404"
-    });
-  }else{
+  let _products = result.slice(perPage * page - perPage, perPage * page)
+
+  if (_products.length < 1) {
+    // res.render('404', {
+    //   pageTitle: "404"
+    // });
     res.render('search',{
-      pageTitle:"Search Page",
-      products:_products,
-      current:page,
-      pages:Math.ceil(count.length/perPage),
-      search_string:query,
+      pageTitle: "Search Page",
+      error_msg:"Không tìm thấy kết quả nào!",
+      query_string: req.query.search_string
+    });
+  } else {
+    res.render('search', {
+      pageTitle: "Search Page",
+      products: _products,
+      current: page,
+      pages: Math.ceil(count.length / perPage),
+      search_string: query,
       query_string: req.query.search_string,
-      count:count.length,
-      perPage:perPage
+      count: count.length,
+      perPage: perPage
     });
   }
 });
 
-router.get("/api/products",(req,res)=>{
+router.get("/products/:page", async (req, res) => {
+  const perPage = parseInt(req.params.perPage) || 8;
+  const page = parseInt(req.params.page) || 1;
+  const products = await getAllProducts();
+  let _products = products.slice(perPage * page - perPage, perPage * page);
+  res.render("filterProducts",{
+    pageTitle: "Products Page",
+    products:_products,
+    current:page,
+    perPage: perPage,
+    query_string:"",
+    count:products.length,
+    pages:Math.ceil(products.length / perPage),
+  });
+});
 
+router.post("/products/:page", async (req, res) => {
+  const perPage = parseInt(req.body.perPage) || 8;
+  const page = parseInt(req.body.page) || 1;
+  const brandId = parseInt(req.body.brandId) ||0;
+  const categoryId = req.body.categoryId || 0
+  const sortBy = req.body.sortBy || 0
+  const arrow = req.body.arrow || 0
+  const brandArray = await getBrands();
+  const categoryArray = await getCategories();
+  let and;
+  let or = []
+  var childCategories;
+  let options;
+   
+  ///products/1?brandId=1&categoryId=0&sortBy=0&arrow=0
+  
+  if (brandId == 0) {
+    and = {}
+  } else {
+    for (brand of brandArray) {
+      if (brand.id == brandId) {
+        and = { brand_id: brand.id }
+      }
+    }
+  }
+  if (categoryId == 0) {
+    or.push({});
+  } else {
+    for (category of categoryArray) {
+      if (category.id == categoryId) {
+        childCategories = await getChildCategory(category);
+        if (childCategories.length == 0) {
+          or.push({ category_id: category.id })
+        } else {
+          for (child of childCategories) {
+            or.push({ category_id: child.id })
+          }
+        }
+      }
+    }
+  }
+  let sorted = arrow == 0 ? 1 : (-1);
+  var prods;
+  options = {
+    $and: [
+      and,
+      { $or: or },
+    ]
+  }
+  if (sortBy == 0) {
+    prods = await Product.find(options).sort({ list_price: sorted })
+
+  } else {
+    prods = await Product.find(options).sort({ product_name: sorted })
+  }
+  let _prods = prods.slice(perPage * page - perPage, perPage * page);
+  // res.send(brandId + "" + categoryId + "" + sortBy + "" + arrow + "*" + prods.length + "*" + prods.toString());
+  res.render("filterProducts",{
+        pageTitle: "Products Page",
+        products:_prods,
+        current:page,
+        perPage: perPage,
+        count:prods.length,
+        pages:Math.ceil(prods.length / perPage),
+        query_string:req.originalUrl.toString(),
+        selectedBrand :brandId,
+        selectedCategory:categoryId,
+        selectedSortBy:sortBy,
+        selectedArrow:arrow
+      });
+});
+
+router.get("/products/filter/:page", async (req,res)=>{
+  // console.log("##",req.originalUrl);/filter?brandId=1&categoryId=1&sortBy=0&arrow=0
+  // console.log("&&",req.path);// /filter
+  const perPage = parseInt(req.params.perPage) || 8;
+  const page = parseInt(req.params.page) || 1;
+  const brandId = req.query.brandId
+  const categoryId = req.query.categoryId
+  const sortBy = req.query.sortBy
+  const arrow = req.query.arrow
+  const brandArray = await getBrands();
+  const categoryArray = await getCategories();
+  let and;
+  let or = []
+  var childCategories;
+  let options;
+  if (brandId == 0) {
+    and = {}
+  } else {
+    for (brand of brandArray) {
+      if (brand.id == brandId) {
+        and = { brand_id: brand.id }
+      }
+    }
+  }
+  if (categoryId == 0) {
+    or.push({});
+  } else {
+    for (category of categoryArray) {
+      if (category.id == categoryId) {
+        childCategories = await getChildCategory(category);
+        if (childCategories.length == 0) {
+          or.push({ category_id: category.id })
+        } else {
+          for (child of childCategories) {
+            or.push({ category_id: child.id })
+          }
+        }
+      }
+    }
+  }
+  let sorted = (arrow == 0) ? 1 : (-1);
+  var prods;
+  options = {
+    $and: [
+      and,
+      { $or: or },
+    ]
+  }
+  if (sortBy == 0) {
+    prods = await Product.find(options).sort({ list_price: sorted })
+
+  } else {
+    prods = await Product.find(options).sort({ product_name: sorted })
+  }
+  let _prods = prods.slice(perPage * page - perPage, perPage * page);
+  let originalUrl = req.originalUrl.toString();
+  // res.send(req.originalUrl.toString())
+  // res.send(brandId+"*"+categoryId+"*"+sortBy+"*"+arrow+'/\n'+prods.length+"###"+prods)
+  ///products/filter/1?brandId=8&categoryId=0&sortBy=0&arrow=0
+  res.render("filterProducts",{
+    pageTitle: "Products Filter Page",
+    products:_prods,
+    current:page,
+    perPage: perPage,
+    count:prods.length,
+    pages:Math.ceil(prods.length / perPage),
+    query_string:req.originalUrl.substring(originalUrl.indexOf('?')),
+    selectedBrand :brandId,
+    selectedCategory:categoryId,
+    selectedSortBy:sortBy,
+    selectedArrow:arrow
+  });
+  
 });
 
 router.get('/privacyPolicy', (req, res) => {
@@ -102,9 +266,23 @@ router.get('/dashboard', ensureAuthenticated, (req, res) => {
   });
 });
 
-async function sortArr (a,b,c){
-  return lodash.sortBy(a,b,c);
+async function sortArr(a, b, c) {
+  return lodash.sortBy(a, b, c);
 }
+
+async function getChildCategory(category) {
+  let categoryArray = await getCategories();
+  let childCategories =  categoryArray.filter(ele => ele.parent_category == category.id)
+  return childCategories;
+}
+
+async function convertStringToObject(str) {
+  var obj = {};
+  if (str && typeof str === 'string') {
+    var objStr = str.match(/\{(.)+\}/g);
+    eval("obj =" + objStr);
+  }
+};
 
 async function getBrands() {
   await awaitReconnectDB();
@@ -116,7 +294,7 @@ async function getBrands() {
   });
 }
 
-async function escapeRegex (string)  {
+async function escapeRegex(string) {
   return string.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
@@ -127,15 +305,15 @@ async function awaitReconnectDB() {
 async function getSearchProducts(array) {
   let products = [];
   for (let arr of array) {
-   let prod = await Product.findById(arr.product_id);
-      products.push(prod);
+    let prod = await Product.findById(arr.product_id);
+    products.push(prod);
   }
- products = await sortArr(products,["list_price"],['asc'])
+  products = await sortArr(products, ["list_price"], ['asc'])
   return products;
 }
 
 async function getDocumentsByBrands(perPage, brands) {
-  var Results = [];
+  let Results = [];
   for (brand of brands) {
     await Product.find({ brand_id: brand.id }).limit(perPage).lean().exec((err, products) => {
       Results.push({ brand_name: brand.brand_name, products: products });
@@ -143,6 +321,17 @@ async function getDocumentsByBrands(perPage, brands) {
   }
   return Results;
 };
+
+async function getBrands() {
+  return await Brand.find({});
+}
+async function getCategories() {
+  return await Category.find({});
+};
+
+async function getAllProducts(){
+  return await Product.find({}).sort({list_price:1});
+}
 
 function nonAccentVietnamese(str) {
   str = str.toLowerCase();

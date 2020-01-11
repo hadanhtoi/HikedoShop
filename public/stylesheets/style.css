@@ -788,6 +788,26 @@ span.sale-tag{
   border-radius: 10px;
 }
 
+#filter-product-form select{
+  margin: auto 3px;
+}
+
+button.filter-btn{
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  margin:auto 5px;
+}
+
+.min-width-110{
+  min-width: 110px;
+}
+
+.min-width-70{
+  min-width: 70px;
+}
+
 
 
 
