@@ -114,7 +114,7 @@ ul.sub-title-menu{
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
   right: 0;
-  top: 100%;
+  top: 63%;
   transition: all 0.5s ease;
   opacity: 0;  
   visibility: hidden;
@@ -494,7 +494,8 @@ ul.header-right li:not(:first-child) {
 }
 
 .lux-bg{
-  background-color: #f4f4f4;
+  /* background-color: #f4f4f4; */
+  background-color: #f1f0f0;
 }
 
 .user-image{
@@ -552,7 +553,7 @@ ul.header-right li:not(:first-child) {
   position: relative;
   text-decoration: none;
   vertical-align: top;
-  width: 50%;
+  width: 100%;
 }
 
 .product-card>a{
@@ -573,7 +574,7 @@ ul.header-right li:not(:first-child) {
 
 @media screen and (max-width: 1023px) and (min-width: 481px){
 .c-product-card {
-    width: 33.33% !important;
+    width: 50% !important;
 }
 }
 
@@ -749,7 +750,7 @@ span.sale-tag{
   border: 1px solid white;
 }
 
-.product-card div:nth-child(3):hover,.product-card div:nth-child(3):focus,.product-card div:nth-child(3) i:hover,.product-card div:nth-child(3) i:focus{
+.product-card div:nth-child(4):hover,.product-card div:nth-child(4):focus,.product-card div:nth-child(4) i:hover,.product-card div:nth-child(4) i:focus{
   color: red !important;
 }
 
@@ -808,7 +809,126 @@ button.filter-btn{
   min-width: 70px;
 }
 
+.product-img{
+  width: 30%;
+  min-width: 250px;
+}
+.product-img img{
+  /* width: 100 */
+}
 
+.cart-row{
+  display: flex;
+  flex-direction: row;
+}
+
+.cart-item{
+  flex:0.75
+}
+
+.item-name{
+  flex:0.25
+}
+
+.product-image{
+  position: relative;
+}
+
+.product-image img {
+  display: block;
+width: 100%;
+}
+
+.quantity{
+  margin-right: 20px;
+}
+
+.dec-btn, .inc-btn{
+width: 30px;
+height: 30px;
+border-radius: 50%;
+line-height: 30px;
+border: 1px solid#999;
+text-align: center;
+cursor: pointer;
+user-select: none;
+}
+
+.quantity input {
+border-radius: 8px;
+border: 1px solid black;
+text-align: center;
+color: #333;
+font-weight: 400;
+line-height: 30px;
+outline: none;
+}
+
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+  width: 220px;
+}
+
+.bootstrap-select:not(.input-group-btn), .bootstrap-select[class*="col-"] {
+  float: none;
+  display: inline-block;
+  margin-left: 0;
+}
+
+.bootstrap-select {
+  width: 220px;
+  vertical-align: middle;
+}
+
+.bootstrap-select > select {
+  position: absolute !important;
+  bottom: 0;
+  left: 50%;
+  display: block !important;
+  width: .5px !important;
+  height: 100% !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  border: none;
+  z-index: 0 !important;
+}
+
+.bootstrap-select > .dropdown-toggle {
+  position: relative;
+  width: 100%;
+  text-align: right;
+  white-space: nowrap;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.add-btn{
+padding-left: 0;
+list-style: none;
+margin-top: 30px;
+}
+
+.add-btn a{
+border: 1px solid transparent;
+}
+
+.h3-color{
+  color: #999900;
+}
+
+.quantity2{
+  /* padding-left: 10px;
+  padding-right: 10px; */
+}
 
 
 

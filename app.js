@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+var MongoStore = require('connect-mongo')(session) ;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -44,8 +45,9 @@ app.use(express.urlencoded({ extended: false }));
 // Express session
 app.use(session({
   secret: 'secret',
-  resave: true,
+  resave: false,
   saveUninitialized: true,
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
   cookie: { maxAge: 8*60*60*1000 },
 }));
 // Passport middleware
@@ -60,7 +62,7 @@ app.use((req,res,next)=>{
   res.locals.warning_msg = req.flash('warning_msg');
   res.locals.error = req.flash('error');
   res.locals.message = req.flash();
-  
+  res.locals.session = req.session;
   // res.locals.error_arr = req.flash('error_arr');
   next();
 });

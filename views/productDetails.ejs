@@ -1,0 +1,59 @@
+<div class="container mt-5">
+  <%if( product ){%>
+  <div class="row">
+    <div class="col-lg-6 product-image">
+      <div class="list-group-item">
+        <img src="<%=product.images[0]%>">
+      </div>
+    </div>
+    <div class="col-lg-6" style="margin: auto;">
+      <div class=" d-flex align-items-center justify-content-between flex-column flex-sm-row">
+        <input type="hidden" id="productId" name="productId" value="<%=product._id%>">
+        <h3 class="h3-color">Hãng sản xuất: </h3>
+        <h3><%=brandName%></h3>
+      </div>
+      <div class="d-flex align-items-center justify-content-between flex-column flex-sm-row">
+        <h3 class="h3-color">Loại sản phẩm:</h3 class="h3-color">
+        <h3><%=categoryName%></h3>
+      </div>
+      <div class="d-flex align-items-start justify-content-start flex-column">
+        <h3 class="h3-color">Tên:</h3 class="h3-color">
+        <h4><%=product.product_name%></h4>
+      </div>
+      <% if(amount < 1) { %>
+      <h3 class="mt-2 mb-2 text-danger">Sản phầm hiện không có sẵn!</h3>
+      <h3 class="mb-2 text-danger">Xin hãy liên hệ cửa hàng</h3>
+      <%  }else{%>
+      <div class="d-flex align-items-center justify-content-between flex-column flex-sm-row">
+        <h3 class="h3-color">Giá</h3 class="h3-color">
+        <div style="width: 100%; text-align: center;">
+          <h4>
+            <%=product.list_price.toLocaleString('vi-VN', {style: 'currency',currency: 'VND'})%><%=product.money_unit%>
+          </h4>
+        </div>
+      </div>
+      <div class="quantity d-flex align-items-center">
+        <input type="number" class="border:1px solid black ; width: 35%;text-align: center;" id="quantity" name="quantity" min="1" max="<%=amount%>"
+          value="1">
+        <select id="productSize" name="productSize" class="ml-3" style="width: 200px;" tabindex="-98">
+          <%for(let k in product.sizes){%>
+          <%if(product.sizes.hasOwnProperty(k)){%>
+          <% if(product.sizes[k].amount){%>
+          <option value="<%=product.sizes[k].size%>"><%=product.sizes[k].size%></option>
+          <% }%>
+          <% }%>
+          <% }%>
+        </select>
+      </div>
+      <div class="add-btn">
+        <div class="flex-1 d-flex justify-content-center" style="border-radius: 20px; padding:5px 10px;">
+          <button class="bg-dark" id="submitAddToCart"
+            style="width: 90%;border-radius: 15px; text-decoration: none;font-size: 20px; color: white !important;">
+            <i class="mt-2 mb-2 fas fa-shopping-cart fa-1x text-light">Add To Cart</i></button>
+        </div>
+      </div>
+      <% }%>
+    </div>
+  </div>
+  <%}%>
+</div>

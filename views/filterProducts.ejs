@@ -41,6 +41,8 @@
       </div>
     </form>
   </div>
+  <% include partials/messages %>
+    <%if(!error_msg || typeof error_msg == undefined || error_msg == null || error_msg == ""){%>
   <div class="row col-12 col-md-12 justify-content-center mt-2 mb-3" style="font-weight: bold;font-size: 22px;">
     <div>
       <% if(current == pages){%>
@@ -54,7 +56,7 @@
     <% for(let product of products){%>
     <div class="c-product-card">
       <div class="product-card">
-        <a href="#">
+        <a href="/productDetails/<%=product._id%>">
           <div class="product-card-media lux-bg">
             <img id="product-img" src="<%= product.images[0]%>" alt="">
           </div>
@@ -63,17 +65,36 @@
           <h2 id="productName"><%= product.product_name%></h2>
           <div class="product-price flex-wrap">
             <%#<span class="old-price">2,220,000đ</span>%>
-            <span class="current-price"><%=product.list_price%><%=product.money_unit%></span>
+            <span class="current-price"><%=product.list_price.toLocaleString('vi-VN', {style: 'currency',currency: 'VND'})%> <%=product.money_unit%></span>
           </div>
         </div>
-        <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
-          <div class="col d-flex justify-content-center ">
-            <a href=""><i class="fas fa-heart fa-2x text-light"></i></a>
+        <%if(Number(amount[product._id]) > 0){%>
+          <div class=" quantity2 d-flex  lux-bg pb-3 justify-content-center">
+            <input type="number" style="border:1px solid black ;border-radius:5px ; width: 35%;text-align: center;"
+              class="quantity-item" name="quantity" min="1" max="<%=amount[product._id]%>" value="1">
+            <select name="productSize" class="ml-3 productSize"
+              style="width: 35%; border:1px solid black ;border-radius:5px ;" tabindex="-98">
+              <%for(let k in product.sizes){%>
+              <%if(product.sizes.hasOwnProperty(k)){%>
+              <% if(product.sizes[k].amount){%>
+              <option value="<%=product.sizes[k].size%>"><%=product.sizes[k].size%></option>
+              <% }%>
+              <% }%>
+              <% }%>
+            </select>
           </div>
-          <div class="col d-flex justify-content-center ">
-            <a href=""><i class="fas fa-shopping-cart fa-2x text-light"></i></a>
+          <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
+            <div class="col d-flex justify-content-center ">
+              <a id="<%=product._id%>"  data-id="<%=product._id%>"
+                onclick="window.clickAdd(this)"><i class="fas fa-shopping-cart fa-2x text-light"></i></a>
+            </div>
           </div>
-        </div>
+          <%}else{%>
+          <div class="d-flex align-items-center justify-content-center lux-bg"
+            style="width: 100%; height: 105px;color: red;">
+            <h4>Liên hệ </h4>
+          </div>
+          <% }%>
       </div>
     </div>
     <% }%>
@@ -133,4 +154,5 @@
       <% }%>
     </nav>
   </div>
+  <%}%>
 </div>

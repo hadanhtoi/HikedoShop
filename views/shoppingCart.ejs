@@ -1,0 +1,23 @@
+<div class="container d-flex flex-column mt-3">
+  <div class="row">
+    <h3>Shopping Cart</h3>
+  </div>
+  <%if(items){%>
+  <div class="row flex-row col-12 col-sm-12 bg-secondary">
+    <div class="col-4 col-sm-4 text-light d-flex align-items-center justify-content-center">Item</div>
+    <div class="col-1 col-sm-1 text-light d-flex align-items-center justify-content-center">Size</div>
+    <div class="col-2 col-sm-2 text-light d-flex align-items-center justify-content-center">Quantity</div>
+    <div class="col-1 col-sm-1 text-light d-flex align-items-center justify-content-center text-center">Unit Price
+    </div>
+    <div class="col-3 col-sm-3 text-light d-flex align-items-center justify-content-center">Action</div>
+    <div class="col-1 col-sm-1 text-light d-flex align-items-center justify-content-center">Total</div>
+  </div>
+  <%for(let item in items){%>
+  <% if(items.hasOwnProperty(item)){%>
+  
+  <% }%>
+  <%}%>
+<%}else{%>
+  <h2>Chưa có sản phẩm nào được chọn!</h2>
+  <%}%>
+</div>

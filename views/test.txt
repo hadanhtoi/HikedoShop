@@ -148,3 +148,30 @@
   //       })
   //     })
   //   })
+
+  button class="bg-dark"
+            style="width: 90%;border-radius: 15px; text-decoration: none;font-size: 20px; color: white !important;">
+            <i class="mt-2 mb-2 fas fa-shopping-cart fa-1x text-light">Add To Cart</i></button>
+
+            <button id="submitAddToCart" style="text-decoration: none;font-size: 20px; color: white !important;">
+            <i class="fas fa-shopping-cart fa-1x text-light">Add To Cart</i>
+          </button>
+
+          <!-- <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
+          <div class="col d-flex justify-content-center ">
+            <a href=""><i class="fas fa-heart fa-2x text-light"></i></a>
+          </div>
+          <div class="col d-flex justify-content-center ">
+            <a href="/add-to-cart/<%=product._id%>"><i class="fas fa-shopping-cart fa-2x text-light"></i></a>
+          </div>
+        </div> -->
+
+
+        <!-- <div class="unset-radius product-btn bg-dark d-flex flex-row flex-wrap">
+          <div class="col d-flex justify-content-center ">
+            <a href=""><i class="fas fa-heart fa-2x text-light"></i></a>
+          </div>
+          <div class="col d-flex justify-content-center ">
+            <a href="/add-to-cart/<%=product._id%>"><i class="fas fa-shopping-cart fa-2x text-light"></i></a>
+          </div>
+        </div> -->

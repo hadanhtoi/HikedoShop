@@ -12,38 +12,30 @@
       </div>
       <div class="col-md-4 order-md-3 d-flex justify-content-center justify-content-md-end align-items-center">
         <ul class="header-right">
-          <li>
-            <a href="#">
-              <span class="icon account-icon"></span>
-            </a>
-            <ul class="sub-title-menu account-wrapper">
-              <li><a href="#">Sign in</a></li>
-              <li><a href="">Sign up</a></li>
-              <li><a href="">Profile</a></li>
-              <li><a href="">Edit profile</a></li>
-              <li><a href="">Logout</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">
-              <span class="icon heart-icon"></span>
-            </a>
-          </li>
+          <%#<li><a href="#"><span class="icon heart-icon"></span></a></li>%>
           <li>
             <a href="#">
               <span class="icon shopping-cart-icon">
                 <span class="cart-icon">
-                  <span class="cart-quantity">
-                    0
+                  <span id="bagQuantity" class="cart-quantity">
+                    <%=session.cart.totalQuantity%>
                   </span>
                 </span>
               </span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <span class="icon  settings-icon"></span>
-            </a>
+            <div class="dropdown">
+              <a href="#" data-toggle="dropdown">
+                <span class="icon account-icon"></span>
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/users/signIn">Sign in</a>
+                <a class="dropdown-item" href="/users/signUp">Sign up</a>
+                <a class="dropdown-item" href="/users/profile">Profile</a>
+                <a class="dropdown-item" href="/users/signOut">Logout</a>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
