@@ -1,12 +1,15 @@
 # HikedoShop
 
 1.Clone project to pc
-2.cd HikedoShop/
+2.$cd HikedoShop/
+$checkout development-homePage
 3.Install node_modules to project
 $npm install
 4.Install nodemon (search)
 $npm install -g nodemon
-5.run $nodemon start
+5.run 
+
+$nodemon start
 # EJS
 <% include partials/head %>
 or

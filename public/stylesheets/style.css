@@ -930,5 +930,24 @@ border: 1px solid transparent;
   padding-right: 10px; */
 }
 
+.scroll-horizontal{
+  /* width: 100vw; */
+  height: 100vh;
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+.image-wrap{
+  width: 50%;
+  height: 100%;
+}
+
+.name{
+  width: 50%;
+  height: 100%;
+}
+
+
+
 
 

@@ -206,18 +206,41 @@ router.post("/addToCard",(req,res)=>{
 });
 //shopping cart
 router.get('/shoppingCart', (req, res) => {
-  let items = [];
-  if (!req.session.cart) {
-    return res.render('shoppingCart', { products: null });
-  }
-  let cart = new Cart(req.session.cart);
-  for (let key in cart.items) {
-    if (cart.items.hasOwnProperty(key)) {
-      Product.findById(key, (err, product) => {
+  // let items = [];
+  // if (!req.session.cart) {
+  //   return res.render('shoppingCart', { products: null });
+  // }
+  // let cart = new Cart(req.session.cart);
+  // for (let key in cart.items) {
+  //   if (cart.items.hasOwnProperty(key)) {
+  //     Product.findById(key, (err, product) => {
         // items.push({item:product,quantity:cart.items[key].price:cart.items})
-      });
+  //     });
+  //   }
+  // }
+  if (!req.session.cart) {
+      return res.render('shoppingCart', { cart: {} });
     }
-  }
+    let cart = new Cart(req.session.cart);
+    // let amountArr = [];
+    // let _prods = cart.generateArray();
+    // for(let i=0;i<_prods.length;i++){
+    //   if(_prods[i].sizes.length >0){
+    //     let amount = 0;
+    //     for(let k in _prods[i].sizes){
+    //       if(_prods[i].sizes.hasOwnProperty(k)){
+    //         if(_prods[i].sizes[k].amount){
+    //           amount += _prods[i].sizes[k].amount;
+    //         }
+    //       }
+    //     }
+    //     amountArr[_prods[i]._id]=amount;
+    //   }
+    // }
+  res.render('shoppingCart',{
+    cart:cart,
+    // amount:amountArr
+  })
 });
 
 router.post("/products/:page", async (req, res) => {
