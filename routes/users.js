@@ -21,6 +21,8 @@ router.get('/signUp', (req, res, next) => {
 // Profile
 router.get('/profile', ensureAuthenticated, (req, res) => {
   const createdAt = moment(req.user.createdAt).format('MM/DD/YYYY');
+  console.log(req.user.id);
+  
   res.render('userProfile', {
     pageTitle: "User Profile",
     user: req.user,

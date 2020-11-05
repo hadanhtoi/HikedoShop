@@ -23,6 +23,9 @@
                   <th scope="col" class="border-0 bg-light">
                     <div class="py-2 text-uppercase">Action</div>
                   </th>
+                  <th scope="col" class="border-0 bg-light">
+                    <div class="py-2 text-uppercase">Total</div>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -31,7 +34,7 @@
                   <%}else{%>
                     <% for(let i in cart.items){%>
                       <% if(cart.items.hasOwnProperty(i)){%>
-                      <tr>
+                      <tr class="_item">
                         <th scope="row" class="border-0">
                           <div class="p-2">
                             <img src="<%=cart.items[i].item.images[0]%>" alt=""
@@ -41,10 +44,10 @@
                             </div>
                           </div>
                         </th>
-                        <td class="border-0 align-middle"><strong><%=cart.items[i].item.list_price%></strong></td>
-                        <td class="border-0 align-middle ">
+                        <td class="border-0 align-middle"><strong><%=cart.items[i].item.list_price.toLocaleString('vi-VN', {style: 'currency',currency: 'VND'})%><%= cart.items[i].item.money_unit%></strong></td>
+                        <td class="border-0 align-middle sizes">
                        <% cart.items[i].sizes.forEach((item,index)=>{%>
-                        <div class="row flex-row justify-content-around">
+                        <div class="row flex-row justify-content-around size">
                             <input type="number"
                               style="border:1px solid black ;border-radius:5px ; width: 40%;text-align: center;"
                               class="quantity-item"  min="1" max="100" value="<%=item.quantity%>">
@@ -58,14 +61,21 @@
                         <td class="border-0 align-middle jus">
                           <div class="row flex-row justify-content-around" >
                             <div class="row">
-                              <a href="#" class="text-dark"><i class="fas fa-sync-alt"></i></a>
+                              <a id="<%i%>" onclick="window.updateItem(this)" class="text-dark"><i class="fas fa-sync-alt"></i></a>
                             </div>
-                            <div class="row"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a></td></div>
+                            <div class="row"><a href="#" class="text-dark"><i class="fa fa-trash"></i></a>
+                            </div>
                           </div>
+                            </td>
+                            <td class="border-0 align-middle">
+                              <div class="row flex-row justify-content-center" >
+                                <span><strong><%=cart.items[i].price.toLocaleString('vi-VN', {style: 'currency',currency: 'VND'})%><%= cart.items[i].item.money_unit%></strong></span>
+                              </div>
+                            </td>
                       </tr>
                     <%}%>
                     <%}%>
-                    <% }%>
+                    <%}%>
               </tbody>
             </table>
           </div>
@@ -75,35 +85,52 @@
 
       <div class="row py-5 p-4 bg-white rounded shadow-sm">
         <div class="col-lg-6">
-          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Coupon code</div>
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Mã giảm giá</div>
           <div class="p-4">
-            <p class="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
+            <p class="font-italic mb-4">Nhập mã giảm giá nếu có</p>
             <div class="input-group mb-4 border rounded-pill p-2">
-              <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3"
+              <input type="text" placeholder="" aria-describedby="button-addon3"
                 class="form-control border-0">
               <div class="input-group-append border-0">
-                <button id="button-addon3" type="button" class="btn btn-dark px-4 rounded-pill"><i
-                    class="fa fa-gift mr-2"></i>Apply coupon</button>
+                <button id="button-addon3" type="button" onclick="window.updateItem(this)" class=" btn-dark px-4 rounded-pill"><i
+                    class="fa fa-gift mr-2"></i>Nhập</button>
               </div>
+              
             </div>
           </div>
-          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller</div>
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thông tin thêm</div>
           <div class="p-4">
-            <p class="font-italic mb-4">If you have some information for the seller you can leave them in the box below
+            <p class="font-italic mb-4">Hãy nhập thêm thông tin cho người bán hàng
             </p>
-            <textarea name="" cols="30" rows="2" class="form-control"></textarea>
+            <textarea id="description" name="" cols="30" rows="2" class="form-control"></textarea>
+          </div>
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Thông tin người mua</div>
+          <div class="p-4 flex-column">
+            <div class="form-group d-flex flex-column" style="width: 100%;">
+              <label for="username">Tên người mua</label>
+              <input id="customerId" class="border-radius-input border-bottom-solid-gray" type="text" name="username" value="<%=(typeof user != 'undefined') ? user.name : ''%>">
+            </div>
+            <div class="form-group d-flex flex-column">
+              <label for="phone">Số điện thoại</label>
+              <input id="phoneId" class="border-radius-input border-bottom-solid-gray" type="text" name="phone" value="<%=(typeof user != 'undefined') ? user.phone : ''%>">
+            </div>
+            <div class="form-group d-flex flex-column">
+              <label for="address">Địa chỉ</label>
+              <input id="addressId" class="border-radius-input border-bottom-solid-gray" type="text" name="address" value="<%=(typeof user != 'undefined') ? user.address : ''%>">
+            </div>
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Order summary </div>
+          <div class="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Tổng hóa đơn:</div>
           <div class="p-4">
-            <p class="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.
+            <p class="font-italic mb-4"><span class="text-danger">*</span>Hóa đơn chưa chứa phí ship
             </p>
             <ul class="list-unstyled mb-4">
-              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Order Subtotal
-                </strong><strong><%=cart.totalPrice%></strong></li>
+              <li class="d-flex justify-content-between py-3 border-bottom"><strong class="text-muted">Tổng tiền hóa đơn:
+                
+                </strong><strong> <%=cart.totalPrice.toLocaleString('vi-VN', {style: 'currency',currency: 'VND'})%></strong> <strong> vnd</strong></li>
               
-            </ul><a href="#" class="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+            </ul><button onclick="window.finishOrder(this)" class="btn-dark rounded-pill py-2 btn-block">Finish</button>
           </div>
         </div>
       </div>

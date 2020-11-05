@@ -947,6 +947,10 @@ border: 1px solid transparent;
   height: 100%;
 }
 
+.border-radius-input{
+  border-radius: 10px;
+  height: 42px;
+}
 
 
 

@@ -7,6 +7,7 @@ const Product = require('../models/Product');
 const Product2 = require('../models/Product2');
 const Brand = require('../models/Brand');
 const Category = require('../models/Category');
+const Order = require("../models/Order");
 const selected_category_id = require('../config/constant').SELECTED_CATEGORY_ID;
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 var Cart = require("../models/Cart");
@@ -88,6 +89,7 @@ router.get('/productDetails/:id', async (req, res) => {
           amount:amount
         })
 });
+
 
 router.get('/search/:page', async (req, res) => {
   const perPage = parseInt(req.params.perPage) || 8;
@@ -204,6 +206,31 @@ router.post("/addToCard",(req,res)=>{
     res.status(200).send({quantity : cart.totalQuantity});
   });
 });
+//finishOrder
+router.post('/shop/finishOrder',(req,res)=>{
+  const customer = req.body.customer;
+  const phone = req.body.phone;
+  const address = req.body.address;
+  const description = req.body.description;
+  const cart = req.session.cart;
+  const newOrder = new Order({
+    user_id: (!req.user)?(""):req.user.id,
+    total_price: cart.totalPrice,
+    description:description,
+    status: "processing",
+    address_shipping:address,
+    phone_number:phone,
+    customer_name:customer,
+    sale_code:0,
+  });
+  newOrder.save()
+  .then(order =>{
+    req.session.cart = new Cart({});
+    res.send({mes:"Tạo order thành công",red:"/"});
+  })
+  .catch(err => console.log(err.message)
+  )
+});
 //shopping cart
 router.get('/shoppingCart', (req, res) => {
   // let items = [];
@@ -239,7 +266,7 @@ router.get('/shoppingCart', (req, res) => {
     // }
   res.render('shoppingCart',{
     cart:cart,
-    // amount:amountArr
+    user:req.user
   })
 });
 
